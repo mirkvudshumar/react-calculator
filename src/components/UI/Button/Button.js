@@ -3,28 +3,17 @@ import React from 'react';
 import './Button.css';
 
 const Button = (props) => {
-  let customStyle = [];
-  if (
-    props.value === '+' ||
-    props.value === '-' ||
-    props.value === '*' ||
-    props.value === '/'
-  ) {
-    customStyle.push('buttonOperation');
-  } else if (props.value === '=') {
-    customStyle.push('buttonRed');
+  const classes = ['button'];
+  if (props.buttonStyle) {
+    classes.push(props.buttonStyle);
   }
+
   return (
-    <li style={props.value === '=' ? { width: '44%' } : { width: '20%' }}>
-      <button
-        className={customStyle.join('')}
-        type="button"
-        onClick={props.clicked}
-        value={props.value}
-      >
+    <div className={classes.join(' ')}>
+      <button type="button" onClick={props.clicked} value={props.value}>
         {props.value}
       </button>
-    </li>
+    </div>
   );
 };
 

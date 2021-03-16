@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './App.css';
 
-import Button from './components/UI/Button/Button';
+import Buttons   from './components/Buttons/Buttons';
 import Result from './components/Result/Result'
 
 class App extends Component {
@@ -56,19 +56,10 @@ class App extends Component {
   };
 
   render() {
-    let keys = ['AC', 'C', 'M', '+', 9, 8, 7, '-', 6, 5, 4, '*', 3, 2, 1, '/', '.', 0, '='];
-    keys = keys.map((el) => (
-      <Button
-        key={el}
-        value={el}
-        clicked={(event) => this.onButtonPress(event)}
-      />
-    ));
-
     return (
       <div className="calculator">
         <Result equation={this.state.equationArr} />
-        <ul>{keys}</ul>
+        <Buttons onButtonPress={this.onButtonPress} />
       </div>
     );
   }
