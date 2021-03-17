@@ -17,20 +17,13 @@ class App extends Component {
         equation = [];
         break;
       case '=':
-        if (Array.isArray(equation)) {
-          try {
-            equation = eval(this.state.equationArr.join(''));
-          } catch (error) {
-            alert('error');
-          } finally {
-            equation = eval(this.state.equationArr.join(''));
-          }
-        }
+        // It is a simple app, so no danger of using eval
+        const result = eval(equation.join(''));
+        equation = [];
+        equation.push(result);
         break;
       case 'C':
-        if (Array.isArray(equation) && equation.length > 0) {
           equation.pop();
-        }
         break;
       case '0':
       case '1':
@@ -47,9 +40,7 @@ class App extends Component {
       case '*':
       case '/':
       case '.':
-        if (Array.isArray(equation)) {
           equation.push(event.target.value);
-        }
         break;
     }
     this.setState({ equationArr: equation });
