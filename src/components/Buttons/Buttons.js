@@ -1,5 +1,6 @@
 import React from 'react';
 
+import './Buttons.css';
 import Button from '../UI/Button/Button';
 
 const Buttons = (props) => {

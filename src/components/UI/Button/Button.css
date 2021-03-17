@@ -4,6 +4,7 @@ button {
 	padding: 15px;
 	border: 1px solid #4b4f4c;
 	border-radius: 7px;
+	font-size: 1.1em;
 	background-color: #4b4f4c;
 	color: #dce0dd;
 }
@@ -13,8 +14,9 @@ button:hover {
 }
 
 .button {
+	flex-grow: 1;
 	width: 20%;
-	height: 25%;
+	height: 20%;
 	margin: 6px;
 	display: inline-block;
 	list-style: none;

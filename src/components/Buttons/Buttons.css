@@ -1,0 +1,5 @@
+.buttons {
+  height: 350px;
+  display: flex;
+  flex-wrap: wrap;
+}
