@@ -1,36 +1,54 @@
 import React, { Component } from 'react';
 
 import './App.css';
-
-import Buttons   from './components/Buttons/Buttons';
-import Result from './components/Result/Result'
+import Buttons from './components/Buttons/Buttons';
+import Result from './components/Result/Result';
 
 class App extends Component {
   state = {
     equationArr: [],
   };
 
-  onButtonPress = (event) => {
+  calculateEquation = () => {
     let equation = this.state.equationArr;
+    // It is a simple app, so no danger of using eval
+    try {
+      const result = eval(equation.join(''));
+      equation = result.toString().split('');
+      this.setState({ equationArr: equation });
+    } catch(error) {
+      alert('Error')
+    }
+  };
+
+  deleteOne = () => {
+    let equation = this.state.equationArr;
+    equation.pop();
+    this.setState({ equationArr: equation });
+  };
+
+  deleteAll = () => {
+    let equation = this.state.equationArr;
+    equation = [];
+    this.setState({ equationArr: equation });
+  };
+
+  addNumbersAndOperators = (event) => {
+    let equation = this.state.equationArr;
+    equation.push(event.target.value);
+    this.setState({ equationArr: equation });
+  };
+
+  onButtonPress = (event) => {
     switch (event.target.value) {
-      case 'AC':
-        equation = [];
-        break;
       case '=':
-        if (Array.isArray(equation)) {
-          try {
-            equation = eval(this.state.equationArr.join(''));
-          } catch (error) {
-            alert('error');
-          } finally {
-            equation = eval(this.state.equationArr.join(''));
-          }
-        }
+        this.calculateEquation();
         break;
       case 'C':
-        if (Array.isArray(equation) && equation.length > 0) {
-          equation.pop();
-        }
+        this.deleteOne();
+        break;
+      case 'AC':
+        this.deleteAll();
         break;
       case '0':
       case '1':
@@ -47,18 +65,28 @@ class App extends Component {
       case '*':
       case '/':
       case '.':
-        if (Array.isArray(equation)) {
-          equation.push(event.target.value);
-        }
+        this.addNumbersAndOperators(event);
         break;
     }
-    this.setState({ equationArr: equation });
+  };
+
+  // Enable keyboard input
+  onInputChange = (event) => {
+    const equation = event.target.value.toString().split('');
+    const isKey = new RegExp('^[0-9\.+\/\*-]+$');
+    if (event.target.value.match(isKey) || equation.length === 0) {
+      this.setState({ equationArr: equation });
+    }
   };
 
   render() {
     return (
       <div className="calculator">
-        <Result equation={this.state.equationArr} />
+        <Result
+          equation={this.state.equationArr}
+          onInputChange={this.onInputChange}
+          calculateEquation={this.calculateEquation}
+        />
         <Buttons onButtonPress={this.onButtonPress} />
       </div>
     );

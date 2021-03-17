@@ -3,6 +3,7 @@ input {
 	height: 80px;
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 	font-size: 2em;
 	color: #dce0dd;;
 	background-color: #4b4f4c;
