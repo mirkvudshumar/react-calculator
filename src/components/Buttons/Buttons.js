@@ -13,6 +13,9 @@ const Buttons = (props) => {
       buttonStyle = 'buttonOperation';
     } else if (key === '=') {
       buttonStyle = 'buttonEqual';
+    } else if (key === 'M') {
+      // eslint-disable-next-line no-unused-expressions
+      props.isMemoryFull ? (buttonStyle = 'memoryFull') : (buttonStyle = '');
     }
     return (
       <Button

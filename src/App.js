@@ -103,6 +103,7 @@ class App extends Component {
         />
         <Buttons
           onButtonPress={this.onButtonPress}
+          isMemoryFull={this.state.memory}
         />
       </div>
     );
