@@ -7,6 +7,7 @@ import Result from './components/Result/Result';
 class App extends Component {
   state = {
     equationArr: [],
+    memory: null,
   };
 
   calculateEquation = () => {
@@ -16,8 +17,8 @@ class App extends Component {
       const result = eval(equation.join(''));
       equation = result.toString().split('');
       this.setState({ equationArr: equation });
-    } catch(error) {
-      alert('Error')
+    } catch (error) {
+      alert('Error');
     }
   };
 
@@ -39,6 +40,16 @@ class App extends Component {
     this.setState({ equationArr: equation });
   };
 
+  memorizeEquation = () => {
+    if (!this.state.memory) {
+      const memory = this.state.equationArr;
+      this.setState({ equationArr: [], memory: memory });
+    } else if (this.state.memory) {
+      const equation = this.state.equationArr.concat(this.state.memory);
+      this.setState({ equationArr: equation, memory: null });
+    }
+  };
+
   onButtonPress = (event) => {
     switch (event.target.value) {
       case '=':
@@ -49,6 +60,9 @@ class App extends Component {
         break;
       case 'AC':
         this.deleteAll();
+        break;
+      case 'M':
+        this.memorizeEquation();
         break;
       case '0':
       case '1':
@@ -73,7 +87,7 @@ class App extends Component {
   // Enable keyboard input
   onInputChange = (event) => {
     const equation = event.target.value.toString().split('');
-    const isKey = new RegExp('^[0-9\.+\/\*-]+$');
+    const isKey = new RegExp('^[0-9.+/*-]+$');
     if (event.target.value.match(isKey) || equation.length === 0) {
       this.setState({ equationArr: equation });
     }
@@ -87,7 +101,10 @@ class App extends Component {
           onInputChange={this.onInputChange}
           calculateEquation={this.calculateEquation}
         />
-        <Buttons onButtonPress={this.onButtonPress} />
+        <Buttons
+          onButtonPress={this.onButtonPress}
+          isMemoryFull={this.state.memory}
+        />
       </div>
     );
   }
